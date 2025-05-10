@@ -25,58 +25,30 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
-  const [loading, setLoading] = useState(true);
+  // TEMPORARY FOR SCREENSHOTS: Mock user with admin role to access all pages
+  const mockUser: User = {
+    id: 1,
+    email: 'admin@example.com',
+    firstName: 'Admin',
+    lastName: 'User',
+    role: 'ADMIN'
+  };
 
+  const [user, setUser] = useState<User | null>(mockUser);
+  const [token, setToken] = useState<string | null>('mock-token-for-screenshots');
+  const [loading, setLoading] = useState(false); // Set to false to avoid loading state
+
+  // TEMPORARY: Skip the authentication check for screenshots
   useEffect(() => {
-    const initAuth = async () => {
-      const storedToken = localStorage.getItem('token');
-      if (storedToken) {
-        try {
-          // Setup axios with the token
-          axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-          
-          // Decode token to get user info
-          const decoded: any = jwtDecode(storedToken);
-          setUser({
-            id: decoded.id,
-            email: decoded.sub,
-            firstName: decoded.firstName || '',
-            lastName: decoded.lastName || '',
-            role: decoded.role
-          });
-          setToken(storedToken);
-        } catch (error) {
-          console.error('Error decoding token:', error);
-          localStorage.removeItem('token');
-          setUser(null);
-          setToken(null);
-        }
-      }
-      setLoading(false);
-    };
-
-    initAuth();
+    // This is intentionally empty to skip the regular authentication check
+    setLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
-      const { token } = response.data;
-      
-      localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      const decoded: any = jwtDecode(token);
-      setUser({
-        id: decoded.id,
-        email: decoded.sub,
-        firstName: decoded.firstName || '',
-        lastName: decoded.lastName || '',
-        role: decoded.role
-      });
-      setToken(token);
+      // For screenshot purposes, just set the mock user and don't make API calls
+      setUser(mockUser);
+      setToken('mock-token-for-screenshots');
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -85,9 +57,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (userData: any) => {
     try {
-      await axios.post('/api/auth/register', userData);
-      // After registration, login the user
-      await login(userData.email, userData.password);
+      // For screenshot purposes, just set the mock user
+      setUser(mockUser);
+      setToken('mock-token-for-screenshots');
     } catch (error) {
       console.error('Registration error:', error);
       throw error;
@@ -95,18 +67,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    delete axios.defaults.headers.common['Authorization'];
-    setUser(null);
-    setToken(null);
+    // For screenshot purposes, do nothing to keep the mock user
   };
 
   return (
     <AuthContext.Provider value={{
-      user,
-      token,
-      isAuthenticated: !!user,
-      loading,
+      user: mockUser, // Always provide the mock user
+      token: 'mock-token-for-screenshots',
+      isAuthenticated: true, // Always authenticated for screenshots
+      loading: false, // Never in loading state
       login,
       register,
       logout
