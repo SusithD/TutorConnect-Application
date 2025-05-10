@@ -178,33 +178,36 @@ const AdminUsersPage = () => {
     };
   }, []);
   
-  const filteredUsers = users.filter(user => {
-    // Apply role filter
-    if (roleFilter !== 'all' && user.role.toLowerCase() !== roleFilter) {
-      return false;
-    }
-    
-    // Apply status filter
-    if (statusFilter === 'active' && !user.active) {
-      return false;
-    }
-    if (statusFilter === 'inactive' && user.active) {
-      return false;
-    }
-    
-    // Apply search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      return (
-        user.firstName.toLowerCase().includes(query) ||
-        user.lastName.toLowerCase().includes(query) ||
-        user.email.toLowerCase().includes(query) ||
-        user.phone.includes(query)
-      );
-    }
-    
-    return true;
-  });
+  // Add a safety check to ensure users is an array before filtering
+  const filteredUsers = Array.isArray(users) 
+    ? users.filter(user => {
+        // Apply role filter
+        if (roleFilter !== 'all' && user.role.toLowerCase() !== roleFilter) {
+          return false;
+        }
+        
+        // Apply status filter
+        if (statusFilter === 'active' && !user.active) {
+          return false;
+        }
+        if (statusFilter === 'inactive' && user.active) {
+          return false;
+        }
+        
+        // Apply search query
+        if (searchQuery) {
+          const query = searchQuery.toLowerCase();
+          return (
+            user.firstName.toLowerCase().includes(query) ||
+            user.lastName.toLowerCase().includes(query) ||
+            user.email.toLowerCase().includes(query) ||
+            user.phone.includes(query)
+          );
+        }
+        
+        return true;
+      })
+    : [];
   
   return (
     <div className="max-w-7xl mx-auto">
