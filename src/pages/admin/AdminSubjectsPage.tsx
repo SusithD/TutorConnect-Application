@@ -115,10 +115,13 @@ const AdminSubjectsPage = () => {
     }
   };
   
-  const filteredSubjects = subjects.filter(subject => 
-    subject.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    subject.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Add a safety check to ensure subjects is an array before filtering
+  const filteredSubjects = Array.isArray(subjects) 
+    ? subjects.filter(subject => 
+        subject.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        subject.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
   
   return (
     <div className="max-w-7xl mx-auto">
