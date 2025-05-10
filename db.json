@@ -1,0 +1,132 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@example.com",
+      "firstName": "Admin",
+      "lastName": "User",
+      "role": "ADMIN",
+      "active": true,
+      "lastLogin": "2025-05-10T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "email": "tutor@example.com",
+      "firstName": "Tutor",
+      "lastName": "Smith",
+      "role": "TUTOR",
+      "active": true,
+      "lastLogin": "2025-05-09T14:30:00Z"
+    },
+    {
+      "id": 3,
+      "email": "student@example.com",
+      "firstName": "Student",
+      "lastName": "Jones",
+      "role": "STUDENT",
+      "active": true,
+      "lastLogin": "2025-05-10T09:15:00Z"
+    }
+  ],
+  "tutors": [
+    {
+      "id": 2,
+      "userId": 2,
+      "bio": "Experienced mathematics and computer science tutor with 5+ years of teaching experience.",
+      "hourlyRate": 35,
+      "availability": "Weekdays after 4pm, weekends all day",
+      "rating": 4.8
+    }
+  ],
+  "students": [
+    {
+      "id": 1,
+      "userId": 3,
+      "grade": "University",
+      "major": "Computer Science"
+    }
+  ],
+  "subjects": [
+    {
+      "id": 1,
+      "name": "Mathematics",
+      "description": "Algebra, Calculus, Statistics"
+    },
+    {
+      "id": 2,
+      "name": "Computer Science",
+      "description": "Programming, Algorithms, Data Structures"
+    },
+    {
+      "id": 3,
+      "name": "Physics",
+      "description": "Mechanics, Thermodynamics, Electromagnetism"
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1,
+      "studentId": 1,
+      "tutorId": 2,
+      "startTime": "2025-05-12T15:00:00Z",
+      "endTime": "2025-05-12T16:00:00Z",
+      "status": "CONFIRMED",
+      "notes": "Need help with calculus homework",
+      "subjectId": 1,
+      "createdAt": "2025-05-08T10:30:00Z",
+      "updatedAt": "2025-05-08T10:30:00Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "bookingId": 1,
+      "studentId": 1,
+      "tutorId": 2,
+      "rating": 5,
+      "comment": "Excellent tutor, explained concepts clearly",
+      "createdAt": "2025-05-08T17:15:00Z"
+    }
+  ],
+  "chatRooms": [
+    {
+      "id": 1,
+      "studentId": 1,
+      "tutorId": 2,
+      "createdAt": "2025-05-07T09:00:00Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "chatRoomId": 1,
+      "senderId": 3,
+      "content": "Hello, I'd like to schedule a tutoring session for calculus.",
+      "sentAt": "2025-05-07T09:01:00Z",
+      "read": true
+    },
+    {
+      "id": 2,
+      "chatRoomId": 1,
+      "senderId": 2,
+      "content": "Hi there! I'd be happy to help with calculus. What specific topics are you struggling with?",
+      "sentAt": "2025-05-07T09:05:00Z",
+      "read": true
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "userId": 3,
+      "type": "BOOKING_CONFIRMATION",
+      "message": "Your tutoring session has been confirmed",
+      "read": false,
+      "createdAt": "2025-05-08T10:31:00Z"
+    }
+  ],
+  "auth": {
+    "login": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwibmFtZSI6IlN0dWRlbnQgSm9uZXMiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTcyMDAwMDAwMH0.8jHmQwOF4MXBxMZA87qJXBL2a3XFUldw9hf1HJ9Kcwx"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+com/tutorconnect/model/Notification.class
+com/tutorconnect/model/Notification$NotificationType.class
+com/tutorconnect/controller/auth/RegisterRequest.class
+com/tutorconnect/model/TutorExpertise.class
+com/tutorconnect/model/User.class
+com/tutorconnect/model/User$Role.class
