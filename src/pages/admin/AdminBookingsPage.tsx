@@ -153,60 +153,62 @@ const AdminBookingsPage = () => {
     }
   };
   
-  const filteredBookings = bookings.filter(booking => {
-    // Apply status filter
-    if (statusFilter !== 'all' && booking.status.toLowerCase() !== statusFilter.toLowerCase()) {
-      return false;
-    }
-    
-    // Apply date filter
-    const bookingDate = new Date(booking.startTime);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    if (dateFilter === 'today') {
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      if (bookingDate < today || bookingDate >= tomorrow) {
-        return false;
-      }
-    } else if (dateFilter === 'thisWeek') {
-      const startOfWeek = new Date(today);
-      const dayOfWeek = today.getDay();
-      const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust to Monday
-      startOfWeek.setDate(diff);
-      
-      const endOfWeek = new Date(startOfWeek);
-      endOfWeek.setDate(endOfWeek.getDate() + 7);
-      
-      if (bookingDate < startOfWeek || bookingDate >= endOfWeek) {
-        return false;
-      }
-    } else if (dateFilter === 'past') {
-      if (bookingDate >= today) {
-        return false;
-      }
-    } else if (dateFilter === 'upcoming') {
-      if (bookingDate < today) {
-        return false;
-      }
-    }
-    
-    // Apply search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      return (
-        booking.subject.name.toLowerCase().includes(query) ||
-        booking.student.firstName.toLowerCase().includes(query) ||
-        booking.student.lastName.toLowerCase().includes(query) ||
-        booking.tutor.firstName.toLowerCase().includes(query) ||
-        booking.tutor.lastName.toLowerCase().includes(query) ||
-        booking.notes.toLowerCase().includes(query)
-      );
-    }
-    
-    return true;
-  });
+  const filteredBookings = Array.isArray(bookings) 
+    ? bookings.filter(booking => {
+        // Apply status filter
+        if (statusFilter !== 'all' && booking.status.toLowerCase() !== statusFilter.toLowerCase()) {
+          return false;
+        }
+        
+        // Apply date filter
+        const bookingDate = new Date(booking.startTime);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        if (dateFilter === 'today') {
+          const tomorrow = new Date(today);
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          if (bookingDate < today || bookingDate >= tomorrow) {
+            return false;
+          }
+        } else if (dateFilter === 'thisWeek') {
+          const startOfWeek = new Date(today);
+          const dayOfWeek = today.getDay();
+          const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust to Monday
+          startOfWeek.setDate(diff);
+          
+          const endOfWeek = new Date(startOfWeek);
+          endOfWeek.setDate(endOfWeek.getDate() + 7);
+          
+          if (bookingDate < startOfWeek || bookingDate >= endOfWeek) {
+            return false;
+          }
+        } else if (dateFilter === 'past') {
+          if (bookingDate >= today) {
+            return false;
+          }
+        } else if (dateFilter === 'upcoming') {
+          if (bookingDate < today) {
+            return false;
+          }
+        }
+        
+        // Apply search query
+        if (searchQuery) {
+          const query = searchQuery.toLowerCase();
+          return (
+            booking.subject.name.toLowerCase().includes(query) ||
+            booking.student.firstName.toLowerCase().includes(query) ||
+            booking.student.lastName.toLowerCase().includes(query) ||
+            booking.tutor.firstName.toLowerCase().includes(query) ||
+            booking.tutor.lastName.toLowerCase().includes(query) ||
+            booking.notes.toLowerCase().includes(query)
+          );
+        }
+        
+        return true;
+      }) 
+    : [];
   
   return (
     <div className="max-w-7xl mx-auto">
