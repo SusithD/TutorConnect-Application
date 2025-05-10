@@ -34,8 +34,10 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     
     try {
       const response = await axios.get('/api/notifications');
-      setNotifications(response.data);
-      setUnreadCount(response.data.filter((n: Notification) => !n.read).length);
+      // Ensure response.data is always treated as an array
+      const notificationsData = Array.isArray(response.data) ? response.data : [];
+      setNotifications(notificationsData);
+      setUnreadCount(notificationsData.filter((n: Notification) => !n.read).length);
     } catch (error) {
       console.error('Error fetching notifications:', error);
     }
